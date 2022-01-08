@@ -2,10 +2,12 @@
 
 require_once('Connect.php');
 
-class RemoteConnectTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class RemoteConnectTest extends TestCase
 {
-  public function setUp(){ }
-  public function tearDown(){ }
+  public function setUp(): void { }
+  public function tearDown(): void { }
 
   public function testConnectionIsValid()
   {
