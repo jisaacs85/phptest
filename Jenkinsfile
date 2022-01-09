@@ -18,7 +18,7 @@ pipeline {
         branch 'PR-*'
       }
       steps {
-        sh 'git remote set-url origin https://github.com/jisaacs85/phptest.git'
+        sh 'git remote set-url origin git@github.com:jisaacs85/phptest.git'
         sh 'git remote set-branches --add origin ${CHANGE_TARGET}'
         sh 'git fetch origin'
         sh 'git checkout ${CHANGE_TARGET}'
