@@ -13,7 +13,7 @@ class RemoteConnectTest extends TestCase
   {
     // test to ensure that the object from an fsockopen is valid
     $connObj = new RemoteConnect();
-    $serverName = 'www.google.com';
+    $serverName = 'www.microsoft.com';
     $this->assertTrue($connObj->connectToServer($serverName) !== false);
   }
 }
