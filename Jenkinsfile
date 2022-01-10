@@ -13,6 +13,15 @@ pipeline {
         sh '/bin/phpunit ${WORKSPACE}'
       }
     }
+    stage('SonarQube analysis') {
+      steps {
+        withSonarQubeEnv('Jenkins Sonarqube') {
+          sh 'echo "sonar.projectKey=production:php-project" > ${WORKSPACE}/sonar-project.properties'
+          sh 'echo "sonar.sources=." >> ${WORKSPACE}/sonar-project.properties'
+          sh '/opt/sonarqube-scanner/bin/sonar-scanner'
+        }
+      }
+    }
     stage('Merge PR') {
       when {
         branch 'PR-*'
