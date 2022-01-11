@@ -30,7 +30,26 @@ pipeline {
       }
       steps {
         script {
-          response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"
+          def issue = jiraGetIssue site: 'jenkins-jira', idOrKey: env.GIT_BRANCH
+          if (issue.code.toString() == '200') {
+            response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"
+          }
+          else {
+            def issueInfo = 
+            [
+              fields: [
+                project: [
+                  key: "KAN"
+                ],
+                summary: "Review build ${GIT_BRANCH}",
+                description: "Review changes for build ${GIT_BRANCH}",
+                issueType: [
+                  name: "Task"
+                ]
+              ]
+            ]
+            response = jiraNewIssue site: 'jenkins-jira', issue: issueInfo
+          }
         }
       }
     }
