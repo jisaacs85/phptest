@@ -31,6 +31,8 @@ pipeline {
       steps {
         script {          
           def issue = jiraGetIssue idOrKey: env.GIT_BRANCH, site: 'jenkins-jira'          
+          echo "GetIssueError"
+          echo issue.code.toString()
           if (issue.code.toString() == '404') {            
             def issueInfo = 
             [
