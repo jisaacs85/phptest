@@ -29,11 +29,12 @@ pipeline {
         }
       }
       steps {
-        script {          
+        script {                    
           def issue = jiraGetIssue idOrKey: env.GIT_BRANCH, site: 'jenkins-jira'          
-          echo "GetIssueError"
-          echo issue.code.toString()
-          if (issue.code.toString() == '404') {            
+          if (issue.code.toString() == '200') {            
+            response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"            
+          }
+          else {            
             def issueInfo = 
             [
               fields: [
@@ -48,9 +49,6 @@ pipeline {
               ]
             ]            
             response = jiraNewIssue site: 'jenkins-jira', issue: issueInfo            
-          }
-          else {            
-            response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"            
           }
         }
       }
