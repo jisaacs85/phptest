@@ -31,7 +31,7 @@ pipeline {
       steps {
         script {
           echo 'jiraGetIssue 1'
-          def issue = jiraGetIssue site: 'jenkins-jira', idOrKey: env.GIT_BRANCH
+          def issue = jiraGetIssue idOrKey: env.GIT_BRANCH, site: 'jenkins-jira'
           echo 'jiraGetIssue 1'
           if (issue.code.toString() == '200') {
             echo 'jiraGetIssue 3'
