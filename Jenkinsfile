@@ -35,6 +35,7 @@ pipeline {
             response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"
           }
           else {
+            echo 'Create JIRA 1'
             def issueInfo = 
             [
               fields: [
@@ -48,7 +49,9 @@ pipeline {
                 ]
               ]
             ]
+            echo 'Create JIRA 2'
             response = jiraNewIssue site: 'jenkins-jira', issue: issueInfo
+            echo 'Create JIRA 3'
           }
         }
       }
