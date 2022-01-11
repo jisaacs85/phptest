@@ -29,17 +29,9 @@ pipeline {
         }
       }
       steps {
-        script {
-          echo 'jiraGetIssue 1'
-          def issue = jiraGetIssue idOrKey: env.GIT_BRANCH, site: 'jenkins-jira'
-          echo 'jiraGetIssue 1'
-          if (issue.code.toString() == '200') {
-            echo 'jiraGetIssue 3'
-            response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"
-            echo 'jiraGetIssue 4'
-          }
-          else {
-            echo 'Create JIRA 1'
+        script {          
+          def issue = jiraGetIssue idOrKey: env.GIT_BRANCH, site: 'jenkins-jira'          
+          if (issue.code.toString() == '404') {            
             def issueInfo = 
             [
               fields: [
@@ -52,10 +44,11 @@ pipeline {
                   name: "Task"
                 ]
               ]
-            ]
-            echo 'Create JIRA 2'
-            response = jiraNewIssue site: 'jenkins-jira', issue: issueInfo
-            echo 'Create JIRA 3'
+            ]            
+            response = jiraNewIssue site: 'jenkins-jira', issue: issueInfo            
+          }
+          else {            
+            response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"            
           }
         }
       }
