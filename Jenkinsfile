@@ -22,6 +22,18 @@ pipeline {
         }
       }
     }
+    stage('JIRA') {
+      when {
+        not {
+          branch 'master'
+        }
+      }
+      steps {
+        script {
+          response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"
+        }
+      }
+    }
     stage('Merge PR') {
       when {
         branch 'PR-*'
