@@ -30,9 +30,13 @@ pipeline {
       }
       steps {
         script {
+          echo 'jiraGetIssue 1'
           def issue = jiraGetIssue site: 'jenkins-jira', idOrKey: env.GIT_BRANCH
+          echo 'jiraGetIssue 1'
           if (issue.code.toString() == '200') {
+            echo 'jiraGetIssue 3'
             response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"
+            echo 'jiraGetIssue 4'
           }
           else {
             echo 'Create JIRA 1'
