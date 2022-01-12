@@ -31,7 +31,7 @@ pipeline {
       steps {
         script {                    
           def issue = jiraGetIssue idOrKey: env.GIT_BRANCH, site: 'jenkins-jira'          
-          if (issue.code.toString() == '200') {            
+/*          if (issue.code.toString() == '200') {            
             response = jiraAddComment site: 'jenkins-jira', idOrKey: env.GIT_BRANCH, comment: "Build result: Job- ${JOB_NAME} Build Number - ${BUILD_NUMBER} Build URL - ${BUILD_URL}"            
           }
           else {            
@@ -49,7 +49,7 @@ pipeline {
               ]
             ]            
             response = jiraNewIssue site: 'jenkins-jira', issue: issueInfo            
-          }
+          }*/
         }
       }
     }
